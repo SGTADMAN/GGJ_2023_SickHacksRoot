@@ -62,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = initMoveSpeed;
         //HandleRotation();
         CameraRotation();
-        Movement();
-        JumpAndGravity();
+        //Movement();
+        //JumpAndGravity();
     }
 
     private void Movement()
