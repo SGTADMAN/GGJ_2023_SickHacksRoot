@@ -22,15 +22,29 @@ public class DownhillHoverboardScript : MonoBehaviour
     int waypointNo;
     [SerializeField] Transform targetWaypoint;
     [SerializeField] Transform lastWaypointPos;
+    [SerializeField] Transform startingPoint;
     [SerializeField] float rotationSpeed;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
+    public bool stop;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();
         directionOfTravel = transform.forward;
         waypointNo = 0;
         targetWaypoint = wayPointList[waypointNo];
-        virtualCamera.LookAt = targetWaypoint;        
+        virtualCamera.LookAt = targetWaypoint;
+        stop = false;
+    }
+    public void Reset()
+    {
+        waypointNo = 0;
+        targetWaypoint = wayPointList[waypointNo];
+        virtualCamera.LookAt = targetWaypoint;
+        lastWaypointPos = startingPoint;
+        stop = false;
+        boardRigidbody.velocity = Vector3.zero;
+        boardRigidbody.angularVelocity = Vector3.zero;
+        
     }
     public void HandleMovement(InputAction.CallbackContext context)
     {
@@ -50,7 +64,14 @@ public class DownhillHoverboardScript : MonoBehaviour
             ApplyForce(anchors[i], hits[i]);
         }
 
-        ApplyForwardForce();
+        if (stop)
+        {
+            boardRigidbody.velocity = Vector3.zero;
+        } 
+        else
+        {
+            ApplyForwardForce();
+        }
 
         if (!isUpright())
         {
