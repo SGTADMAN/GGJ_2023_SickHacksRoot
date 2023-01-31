@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class DownhillHoverboardScript : MonoBehaviour
 {
-    [SerializeField] Vector3 input;
+    [SerializeField] Vector3 input, rotInput;
     Rigidbody boardRigidbody;
     public LayerMask layerMask;
     public float multiplier;
@@ -18,6 +18,7 @@ public class DownhillHoverboardScript : MonoBehaviour
     [SerializeField] float minimumDistFromGround = 0.5f;
     [SerializeField] Vector3 directionOfTravel;
     [SerializeField] float forwardSpeed = 10;
+    [SerializeField] float gravity = 9.81f;
     [SerializeField] Transform[] wayPointList;
     int waypointNo;
     [SerializeField] Transform targetWaypoint;
@@ -26,6 +27,7 @@ public class DownhillHoverboardScript : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     public bool stop;
+    [SerializeField] bool grounded;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();
@@ -50,12 +52,22 @@ public class DownhillHoverboardScript : MonoBehaviour
     {
         Vector2 rawInput = context.ReadValue<Vector2>();
         input = new Vector3(rawInput.x, 0, rawInput.y);
-    }  
+    }
+    public void HandleRotation(InputAction.CallbackContext context)
+    {
+        Vector2 rawInput = context.ReadValue<Vector2>();
+        rotInput = new Vector3(rawInput.x, 0, rawInput.y);
+    }
 
     private void Update()
     {
         boardRigidbody.AddForce(input.x * (moveForce) * transform.right);
         boardRigidbody.AddTorque(-input.x * (leanAmount) * transform.forward);
+        if (!grounded)
+        {
+            boardRigidbody.AddTorque(rotInput.x * (turnTorque) * transform.up);
+            boardRigidbody.AddTorque(rotInput.z * (turnTorque) * transform.right);
+        }
     }
     private void FixedUpdate()
     {
@@ -71,9 +83,19 @@ public class DownhillHoverboardScript : MonoBehaviour
         else
         {
             ApplyForwardForce();
+            
+        }
+        if (!Physics.Raycast(transform.position, -transform.up, out normalCheckHit, 1f, layerMask))
+        {
+            ApplyDownwardForce();
+            grounded = false;
+        }
+        else
+        {
+            grounded = true;
         }
 
-        if (!isUpright())
+        if (!isUpright() && grounded)
         {
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
@@ -94,12 +116,19 @@ public class DownhillHoverboardScript : MonoBehaviour
                 virtualCamera.LookAt = targetWaypoint;
             }
         }
-        transform.forward = Vector3.Lerp(transform.forward, Vector3.RotateTowards(transform.forward, targetWaypoint.position - transform.position, rotationSpeed * Time.deltaTime, 0.0f), rotationSpeed * Time.deltaTime);
+        transform.forward = Vector3.RotateTowards(transform.forward,
+                targetWaypoint.position - transform.position,
+                rotationSpeed * Time.deltaTime, 0.0f);
+
     }
 
     private void ApplyForwardForce()
     {
         boardRigidbody.AddForce(transform.forward * (forwardSpeed),ForceMode.Acceleration);
+    }
+    private void ApplyDownwardForce()
+    {
+        boardRigidbody.AddForce(-transform.up * (-gravity), ForceMode.Acceleration);
     }
 
     void ApplyForce(Transform anchor, RaycastHit hit)
@@ -111,11 +140,11 @@ public class DownhillHoverboardScript : MonoBehaviour
             boardRigidbody.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
         }
 
-        //if (!isUpright())
-        //{
-        Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
-        //}
+        if (grounded)
+        {
+            Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
+        }
     }
 
     bool isUpright()

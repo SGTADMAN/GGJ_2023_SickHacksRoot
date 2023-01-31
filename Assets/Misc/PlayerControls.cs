@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BoardRotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""9e987f92-c848-4392-8886-3db10b077097"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -209,6 +218,116 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""323baf2d-4a52-46c9-b9ea-6594a9c81651"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""906274d3-b922-4188-9ad5-d99826a6e493"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""86ddd7d4-0cd1-4452-9ca7-f7717dcc7e9f"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""8f66f309-f12c-4b55-b1f0-1a2d27b2dd77"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""168546b6-7b00-4966-8bc5-f4e9ce7be49d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""RightAnalogue"",
+                    ""id"": ""b836e8e8-2ce1-45db-979e-504bd448196f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""06d86053-1eb7-4f9b-a3df-803f20da247e"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""950145fd-1ef7-49e7-8967-ba6f107be4ed"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""32c8c9e5-c950-4678-99fe-184a9a96651d"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d244603f-2c19-41af-9da8-27dd27903560"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""BoardRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -248,6 +367,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
         m_Movement_CameraControl = m_Movement.FindAction("CameraControl", throwIfNotFound: true);
         m_Movement_Reset = m_Movement.FindAction("Reset", throwIfNotFound: true);
+        m_Movement_BoardRotation = m_Movement.FindAction("BoardRotation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,6 +430,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Movement;
     private readonly InputAction m_Movement_CameraControl;
     private readonly InputAction m_Movement_Reset;
+    private readonly InputAction m_Movement_BoardRotation;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -317,6 +438,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Movement_Movement;
         public InputAction @CameraControl => m_Wrapper.m_Movement_CameraControl;
         public InputAction @Reset => m_Wrapper.m_Movement_Reset;
+        public InputAction @BoardRotation => m_Wrapper.m_Movement_BoardRotation;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -335,6 +457,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Reset.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnReset;
                 @Reset.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnReset;
                 @Reset.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnReset;
+                @BoardRotation.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
+                @BoardRotation.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
+                @BoardRotation.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -348,6 +473,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Reset.started += instance.OnReset;
                 @Reset.performed += instance.OnReset;
                 @Reset.canceled += instance.OnReset;
+                @BoardRotation.started += instance.OnBoardRotation;
+                @BoardRotation.performed += instance.OnBoardRotation;
+                @BoardRotation.canceled += instance.OnBoardRotation;
             }
         }
     }
@@ -375,5 +503,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnCameraControl(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
+        void OnBoardRotation(InputAction.CallbackContext context);
     }
 }

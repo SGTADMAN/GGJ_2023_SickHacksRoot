@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         //HandleRotation();
         //CameraRotation();
         //Movement();
-        //JumpAndGravity();
+        JumpAndGravity();
     }
 
     private void Movement()
