@@ -7,11 +7,17 @@ using UnityEngine.InputSystem;
 
 public class DownhillHoverboardScript : MonoBehaviour
 {
-    [SerializeField] Vector3 input, rotInput;
-    Rigidbody boardRigidbody;
+    [Header("Input")]
+    [SerializeField] Vector3 input;
+    [SerializeField] Vector3 rotInput;
+
+    [Header("Variables")]
     public LayerMask layerMask;
     public float multiplier;
     public float moveForce, turnTorque, leanAmount;
+    Rigidbody boardRigidbody;
+
+    [Header("Raycast")]
     public Transform[] anchors = new Transform[4];
     RaycastHit[] hits = new RaycastHit[4];
     RaycastHit normalCheckHit;
@@ -19,34 +25,35 @@ public class DownhillHoverboardScript : MonoBehaviour
     [SerializeField] Vector3 directionOfTravel;
     [SerializeField] float forwardSpeed = 10;
     [SerializeField] float gravity = 9.81f;
-    [SerializeField] Transform[] wayPointList;
-    int waypointNo;
-    [SerializeField] Transform targetWaypoint;
-    [SerializeField] Transform lastWaypointPos;
-    [SerializeField] Transform startingPoint;
-    [SerializeField] float rotationSpeed;
+
+    [Header("Misc")]
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     public bool stop;
     [SerializeField] bool grounded;
+    [SerializeField] GameObject hoverboardModel;
+
+    [Header ("Waypoint Stuff")]
+    [SerializeField] Transform[] wayPointList;
+    int waypointNo;
+    public Transform targetWaypoint;
+    public Transform lastWaypointPos;
+    public Transform startingPoint;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();
         directionOfTravel = transform.forward;
+        stop = false;
         waypointNo = 0;
         targetWaypoint = wayPointList[waypointNo];
-        virtualCamera.LookAt = targetWaypoint;
-        stop = false;
     }
     public void Reset()
     {
         waypointNo = 0;
         targetWaypoint = wayPointList[waypointNo];
-        virtualCamera.LookAt = targetWaypoint;
         lastWaypointPos = startingPoint;
         stop = false;
         boardRigidbody.velocity = Vector3.zero;
-        boardRigidbody.angularVelocity = Vector3.zero;
-        
+        boardRigidbody.angularVelocity = Vector3.zero;        
     }
     public void HandleMovement(InputAction.CallbackContext context)
     {
@@ -62,11 +69,13 @@ public class DownhillHoverboardScript : MonoBehaviour
     private void Update()
     {
         boardRigidbody.AddForce(input.x * (moveForce) * transform.right);
-        boardRigidbody.AddTorque(-input.x * (leanAmount) * transform.forward);
         if (!grounded)
         {
-            boardRigidbody.AddTorque(rotInput.x * (turnTorque) * transform.up);
-            boardRigidbody.AddTorque(rotInput.z * (turnTorque) * transform.right);
+            hoverboardModel.transform.Rotate((turnTorque * Time.deltaTime) * rotInput.z, (turnTorque * Time.deltaTime) * rotInput.x, 0);
+        }
+        else
+        {
+            hoverboardModel.transform.localRotation = new Quaternion(0, 180, 0, 0);
         }
     }
     private void FixedUpdate()
@@ -79,11 +88,10 @@ public class DownhillHoverboardScript : MonoBehaviour
         if (stop)
         {
             boardRigidbody.velocity = Vector3.zero;
-        } 
+        }
         else
         {
             ApplyForwardForce();
-            
         }
         if (!Physics.Raycast(transform.position, -transform.up, out normalCheckHit, 1f, layerMask))
         {
@@ -94,37 +102,30 @@ public class DownhillHoverboardScript : MonoBehaviour
         {
             grounded = true;
         }
+        
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
-        if (!isUpright() && grounded)
-        {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        }
-
-        if (Vector3.Distance(transform.position, targetWaypoint.position) < Vector3.Distance(lastWaypointPos.position,targetWaypoint.position)/2)
+        if (Vector3.Distance(transform.position, targetWaypoint.position) < Vector3.Distance(lastWaypointPos.position, targetWaypoint.position) / 2)
         {
             try
             {
                 waypointNo++;
                 lastWaypointPos = targetWaypoint;
                 targetWaypoint = wayPointList[waypointNo];
-                virtualCamera.LookAt = targetWaypoint;
             }
             catch
             {
                 lastWaypointPos = wayPointList[wayPointList.Length - 2];
-                targetWaypoint = wayPointList[wayPointList.Length-1];
-                virtualCamera.LookAt = targetWaypoint;
+                targetWaypoint = wayPointList[wayPointList.Length - 1];
             }
         }
-        transform.forward = Vector3.RotateTowards(transform.forward,
-                targetWaypoint.position - transform.position,
-                rotationSpeed * Time.deltaTime, 0.0f);
-
+            transform.LookAt(targetWaypoint, Vector3.up);
+   
     }
 
     private void ApplyForwardForce()
     {
-        boardRigidbody.AddForce(transform.forward * (forwardSpeed),ForceMode.Acceleration);
+        boardRigidbody.AddForce(transform.forward * (forwardSpeed), ForceMode.Acceleration);
     }
     private void ApplyDownwardForce()
     {

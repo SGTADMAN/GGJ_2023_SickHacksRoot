@@ -6,6 +6,7 @@ public class PlayerCollisionScript : MonoBehaviour
 {
     [SerializeField] Transform respawnPoint;
     DownhillHoverboardScript hoverboardScript;
+    PlayerBaseScript baseScript;
     private void Start()
     {
         hoverboardScript = GetComponent<DownhillHoverboardScript>();
