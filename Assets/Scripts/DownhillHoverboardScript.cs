@@ -72,10 +72,14 @@ public class DownhillHoverboardScript : MonoBehaviour
         if (!grounded)
         {
             hoverboardModel.transform.Rotate((turnTorque * Time.deltaTime) * rotInput.z, (turnTorque * Time.deltaTime) * rotInput.x, 0);
+            
+            if(rotInput.magnitude < 0.1)
+                hoverboardModel.transform.localRotation = Quaternion.Slerp(hoverboardModel.transform.localRotation, new Quaternion(0, 180, 0, 0), Time.deltaTime * 0.1f);
         }
         else
         {
             hoverboardModel.transform.localRotation = new Quaternion(0, 180, 0, 0);
+            
         }
     }
     private void FixedUpdate()
@@ -119,7 +123,8 @@ public class DownhillHoverboardScript : MonoBehaviour
                 targetWaypoint = wayPointList[wayPointList.Length - 1];
             }
         }
-            transform.LookAt(targetWaypoint, Vector3.up);
+        //Vector3 lerpPos = Vector3.Slerp(transform.position, targetWaypoint.position, 0.1f*Time.deltaTime);
+        transform.LookAt(targetWaypoint, Vector3.up);
    
     }
 
