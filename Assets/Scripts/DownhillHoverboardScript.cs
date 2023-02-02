@@ -31,6 +31,7 @@ public class DownhillHoverboardScript : MonoBehaviour
     public bool stop;
     [SerializeField] bool grounded;
     [SerializeField] GameObject hoverboardModel;
+    [SerializeField] Animator playerAnim;
 
     [Header ("Waypoint Stuff")]
     [SerializeField] Transform[] wayPointList;
@@ -45,6 +46,7 @@ public class DownhillHoverboardScript : MonoBehaviour
         stop = false;
         waypointNo = 0;
         targetWaypoint = wayPointList[waypointNo];
+        playerAnim = GetComponentInChildren<Animator>();
     }
     public void Reset()
     {
@@ -92,6 +94,7 @@ public class DownhillHoverboardScript : MonoBehaviour
         if (stop)
         {
             boardRigidbody.velocity = Vector3.zero;
+            boardRigidbody.Sleep();
         }
         else
         {
@@ -99,13 +102,17 @@ public class DownhillHoverboardScript : MonoBehaviour
         }
         if (!Physics.Raycast(transform.position, -transform.up, out normalCheckHit, 1f, layerMask))
         {
-            ApplyDownwardForce();
+            if (!stop)
+            {
+                ApplyDownwardForce();
+            }            
             grounded = false;
         }
         else
         {
             grounded = true;
         }
+        playerAnim.SetBool("grounded", grounded);
         
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
