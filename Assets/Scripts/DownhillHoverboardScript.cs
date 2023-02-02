@@ -128,7 +128,7 @@ public class DownhillHoverboardScript : MonoBehaviour
             {
                 lastWaypointPos = wayPointList[wayPointList.Length - 2];
                 targetWaypoint = wayPointList[wayPointList.Length - 1];
-            }
+            }            
         }
         //Vector3 lerpPos = Vector3.Slerp(transform.position, targetWaypoint.position, 0.1f*Time.deltaTime);
         transform.LookAt(targetWaypoint, Vector3.up);

@@ -16,8 +16,8 @@ public class PlayerCollisionScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            transform.position = respawnPoint.position;
             hoverboardScript.Reset();
+            transform.position = respawnPoint.position;            
         }
     }
 }
