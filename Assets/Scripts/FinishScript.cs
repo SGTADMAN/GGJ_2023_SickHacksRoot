@@ -6,6 +6,7 @@ public class FinishScript : MonoBehaviour
 {
     [SerializeField] GameObject followCam, finishCam;
     DownhillHoverboardScript hoverboardScript;
+    [SerializeField] GameObject finishUIMenu;
 
     private void Start()
     {
@@ -19,6 +20,8 @@ public class FinishScript : MonoBehaviour
             followCam.SetActive(false);
             finishCam.SetActive(true);
             hoverboardScript.stop = true;
+            finishUIMenu.SetActive(true);
+            Cursor.visible = true;
         }
     }
 }

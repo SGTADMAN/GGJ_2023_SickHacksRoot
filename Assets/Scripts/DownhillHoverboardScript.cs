@@ -73,7 +73,7 @@ public class DownhillHoverboardScript : MonoBehaviour
         boardRigidbody.AddForce(input.x * (moveForce) * transform.right);
         if (!grounded)
         {
-            hoverboardModel.transform.Rotate((turnTorque * Time.deltaTime) * rotInput.z, (turnTorque * Time.deltaTime) * rotInput.x, 0);
+            hoverboardModel.transform.Rotate((turnTorque * Time.deltaTime) * -rotInput.z, (turnTorque * Time.deltaTime) * rotInput.x, 0);
             
             if(rotInput.magnitude < 0.1)
                 hoverboardModel.transform.localRotation = Quaternion.Slerp(hoverboardModel.transform.localRotation, new Quaternion(0, 180, 0, 0), Time.deltaTime * 0.1f);

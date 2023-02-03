@@ -62,6 +62,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad5b64e0-e5a7-4689-96ca-1a0af7ef300e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -328,6 +337,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""BoardRotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9248837-7843-4045-9a60-8a766f5a01b7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43ae6f83-561f-4854-968b-a3f9382afec3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -368,6 +399,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Movement_CameraControl = m_Movement.FindAction("CameraControl", throwIfNotFound: true);
         m_Movement_Reset = m_Movement.FindAction("Reset", throwIfNotFound: true);
         m_Movement_BoardRotation = m_Movement.FindAction("BoardRotation", throwIfNotFound: true);
+        m_Movement_Pause = m_Movement.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -431,6 +463,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_CameraControl;
     private readonly InputAction m_Movement_Reset;
     private readonly InputAction m_Movement_BoardRotation;
+    private readonly InputAction m_Movement_Pause;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -439,6 +472,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @CameraControl => m_Wrapper.m_Movement_CameraControl;
         public InputAction @Reset => m_Wrapper.m_Movement_Reset;
         public InputAction @BoardRotation => m_Wrapper.m_Movement_BoardRotation;
+        public InputAction @Pause => m_Wrapper.m_Movement_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -460,6 +494,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @BoardRotation.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
                 @BoardRotation.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
                 @BoardRotation.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnBoardRotation;
+                @Pause.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -476,6 +513,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @BoardRotation.started += instance.OnBoardRotation;
                 @BoardRotation.performed += instance.OnBoardRotation;
                 @BoardRotation.canceled += instance.OnBoardRotation;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -504,5 +544,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnCameraControl(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnBoardRotation(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
