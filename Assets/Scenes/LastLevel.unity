@@ -20418,7 +20418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631046db5c464be459cb122d97d585d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csvPath: /Misc/spline.csv
+  csvPath: spline
 --- !u!4 &8835586860846244612
 Transform:
   m_ObjectHideFlags: 0

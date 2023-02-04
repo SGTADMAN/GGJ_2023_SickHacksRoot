@@ -55,7 +55,8 @@ public class DownhillHoverboardScript : MonoBehaviour
         lastWaypointPos = startingPoint;
         stop = false;
         boardRigidbody.velocity = Vector3.zero;
-        boardRigidbody.angularVelocity = Vector3.zero;        
+        boardRigidbody.angularVelocity = Vector3.zero;
+        virtualCamera.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
     }
     public void HandleMovement(InputAction.CallbackContext context)
     {

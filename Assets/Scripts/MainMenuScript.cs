@@ -14,16 +14,8 @@ public class MainMenuScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void OpenBlog()
+    public void OpenURL(string url)
     {
-        Application.OpenURL("https://adamluttonblog.co.uk/");
-    }
-    public void OpenKoFi()
-    {
-        Application.OpenURL("https://ko-fi.com/sgtadman");
-    }
-    public void OpenItch()
-    {
-        Application.OpenURL("https://sgtadman.itch.io/");
+        Application.OpenURL(url);
     }
 }
