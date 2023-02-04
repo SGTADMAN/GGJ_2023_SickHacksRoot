@@ -16,11 +16,11 @@ Made with Unity, Blender, VRoid Studio, & Paint.NET. Animations from Mixamo.
 
 * Adam Lutton - Design, Programming, Texture Art, Modelling.
 	- [Blog](https://adamluttonblog.co.uk/)
-	-[Itch.io](https://sgtadman.itch.io/)
-	-[YouTube](https://www.youtube.com/@adamlutton_gamedev)
-	-[Twitch](https://www.twitch.tv/sgtadman)
+	- [Itch.io](https://sgtadman.itch.io/)
+	- [YouTube](https://www.youtube.com/@adamlutton_gamedev)
+	- [Twitch](https://www.twitch.tv/sgtadman)
 
 * Alex Hall - Modelling
-	-[Itch.io](https://plkdtchcb.itch.io/)
+	- [Itch.io](https://plkdtchcb.itch.io/)
 
 
