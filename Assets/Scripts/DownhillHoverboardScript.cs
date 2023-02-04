@@ -126,8 +126,16 @@ public class DownhillHoverboardScript : MonoBehaviour
             }
             catch
             {
-                lastWaypointPos = wayPointList[wayPointList.Length - 2];
-                targetWaypoint = wayPointList[wayPointList.Length - 1];
+                if (wayPointList.Length == 1)
+                {
+                    lastWaypointPos = startingPoint;
+                    targetWaypoint = wayPointList[wayPointList.Length - 1];
+                }
+                else
+                {
+                    lastWaypointPos = wayPointList[wayPointList.Length - 2];
+                    targetWaypoint = wayPointList[wayPointList.Length - 1];
+                }
             }            
         }
         //Vector3 lerpPos = Vector3.Slerp(transform.position, targetWaypoint.position, 0.1f*Time.deltaTime);

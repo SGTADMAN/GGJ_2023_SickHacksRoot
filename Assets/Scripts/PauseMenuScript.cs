@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -54,4 +55,9 @@ public class PauseMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+    public void ReturnToMain()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
 }

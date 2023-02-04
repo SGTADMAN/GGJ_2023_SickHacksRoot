@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 9af84999b7aa8da45a9c0a5a9d3753e9
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 752efce3d01b15342aec0634a65c0222
+  - enabled: 1
+    path: Assets/Scenes/LastLevel.unity
+    guid: ed6c3b39635c6964088a0aa4826f5b53
   - enabled: 0
     path: Assets/Scenes/HoverboardTest.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
