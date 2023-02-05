@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 127472274}
   - component: {fileID: 127472273}
   - component: {fileID: 127472272}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 183345445}
   - component: {fileID: 183345447}
   - component: {fileID: 183345446}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: PausedTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +717,7 @@ GameObject:
   - component: {fileID: 193471632}
   - component: {fileID: 193471634}
   - component: {fileID: 193471633}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1024,7 +1024,7 @@ GameObject:
   - component: {fileID: 354467939}
   - component: {fileID: 354467941}
   - component: {fileID: 354467940}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1261,7 +1261,7 @@ GameObject:
   - component: {fileID: 432786722}
   - component: {fileID: 432786724}
   - component: {fileID: 432786723}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1525,7 +1525,7 @@ GameObject:
   - component: {fileID: 511621930}
   - component: {fileID: 511621929}
   - component: {fileID: 511621932}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FinishMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1604,16 +1604,16 @@ Canvas:
   m_GameObject: {fileID: 511621927}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1568502083}
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -163246651
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!225 &511621932
@@ -1715,7 +1715,7 @@ GameObject:
   - component: {fileID: 557212598}
   - component: {fileID: 557212597}
   - component: {fileID: 557212596}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2090,7 +2090,7 @@ GameObject:
   - component: {fileID: 735979704}
   - component: {fileID: 735979703}
   - component: {fileID: 735979702}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2169,16 +2169,16 @@ Canvas:
   m_GameObject: {fileID: 735979700}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1568502083}
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -163246651
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!850595691 &928882952
@@ -2254,7 +2254,7 @@ GameObject:
   - component: {fileID: 955178012}
   - component: {fileID: 955178014}
   - component: {fileID: 955178013}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2738,7 +2738,7 @@ GameObject:
   - component: {fileID: 1133174056}
   - component: {fileID: 1133174055}
   - component: {fileID: 1133174054}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NextLevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2929,7 +2929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1166086701}
   - component: {fileID: 1166086702}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonsLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3214,7 +3214,7 @@ GameObject:
   - component: {fileID: 1282231015}
   - component: {fileID: 1282231017}
   - component: {fileID: 1282231016}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StageTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3561,7 +3561,7 @@ GameObject:
   - component: {fileID: 1468779987}
   - component: {fileID: 1468779986}
   - component: {fileID: 1468779985}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3979,7 +3979,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1568502084}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 201
+    m_Bits: 233
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -4034,7 +4034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1612343257}
   - component: {fileID: 1612343258}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: ButtonsLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4244,7 +4244,7 @@ GameObject:
   - component: {fileID: 1687962148}
   - component: {fileID: 1687962150}
   - component: {fileID: 1687962149}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4424,7 +4424,7 @@ GameObject:
   - component: {fileID: 1709586555}
   - component: {fileID: 1709586554}
   - component: {fileID: 1709586553}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4684,7 +4684,7 @@ GameObject:
   - component: {fileID: 1747278385}
   - component: {fileID: 1747278387}
   - component: {fileID: 1747278386}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4843,6 +4843,7 @@ Transform:
   - {fileID: 1652390058}
   - {fileID: 1493120993}
   - {fileID: 717044202}
+  - {fileID: 543450653539593124}
   m_Father: {fileID: 1036452885}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4857,7 +4858,7 @@ GameObject:
   - component: {fileID: 1857475404}
   - component: {fileID: 1857475406}
   - component: {fileID: 1857475405}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5831,6 +5832,11 @@ Transform:
   m_Father: {fileID: 2303790169231966828}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &543450653539593124 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+  m_PrefabInstance: {fileID: 6367527201355095925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &555236915694821665
 Transform:
   m_ObjectHideFlags: 0
@@ -15708,6 +15714,75 @@ Transform:
   m_Father: {fileID: 7547182105945571227}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6367527201355095925
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1836198224}
+    m_Modifications:
+    - target: {fileID: 6097708492678131307, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_Name
+      value: BocchiCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -114
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 21.44577
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -459
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.47956964
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.47940227
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5197956
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5196142
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 94.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905347803317679313, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3adfba65d2aad244e93cb6733ed8d886, type: 3}
 --- !u!4 &6367640918471517552
 Transform:
   m_ObjectHideFlags: 0
