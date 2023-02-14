@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 762777508220332698}
   - component: {fileID: 7882206093365469341}
   - component: {fileID: 339810215668871201}
-  - component: {fileID: 5705807534485564360}
+  - component: {fileID: 6769975523285178104}
   m_Layer: 7
   m_Name: LongWall
   m_TagString: Enemy
@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7594624311721181560}
-  m_LocalRotation: {x: 0.075606115, y: -0.22731969, z: 0.18209466, w: 0.9536515}
-  m_LocalPosition: {x: 1080.1313, y: 201.2468, z: 111.53012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 13.12, y: -24.64, z: 18.743}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8981505866162248978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,17 +250,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 5367
   m_IsSelectable: 1
-  m_SelectedFaces: 01000000
-  m_SelectedEdges:
-  - a: 4
-    b: 5
-  - a: 6
-    b: 4
-  - a: 5
-    b: 7
-  - a: 7
-    b: 6
-  m_SelectedVertices: 04000000050000000600000007000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &762777508220332698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,8 +330,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7594624311721181560}
   m_Mesh: {fileID: 0}
---- !u!64 &5705807534485564360
-MeshCollider:
+--- !u!65 &6769975523285178104
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -348,7 +340,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 2.866344, y: 7.1876926, z: 17.691746}
+  m_Center: {x: 1.4324994, y: 3.5938826, z: 8.842222}

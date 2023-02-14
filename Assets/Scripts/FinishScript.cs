@@ -37,5 +37,6 @@ public class FinishScript : MonoBehaviour
     public void LoadNextMap(string mapName)
     {
         SceneManager.LoadScene(mapName);
+        Time.timeScale = 1;
     }
 }
