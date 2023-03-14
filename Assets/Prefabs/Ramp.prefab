@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 769445266274101521}
   - component: {fileID: 3263255048885329371}
   - component: {fileID: 4773082547003887294}
+  - component: {fileID: 8029716473202944570}
   m_Layer: 0
   m_Name: Ramp
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 44299e8b8c018954bb6bb9ff89f4bacf, type: 3}
+--- !u!54 &8029716473202944570
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911821979201633294}
+  serializedVersion: 2
+  m_Mass: 300
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

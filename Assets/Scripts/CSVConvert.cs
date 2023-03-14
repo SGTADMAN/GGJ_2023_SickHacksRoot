@@ -19,7 +19,6 @@ public class CSVConvert : MonoBehaviour
         for (int i = 0; i < allLines.Length; i++)
         {
             string preSpilt = allLines[i];
-            preSpilt.Replace(System.Environment.NewLine, "");
             string[] splitData = preSpilt.Split(';');
             verts[i] = new Vector3(float.Parse(splitData[0]), float.Parse(splitData[2]), float.Parse(splitData[1]));           
         }

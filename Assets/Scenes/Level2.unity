@@ -39850,8 +39850,8 @@ MonoBehaviour:
   - {fileID: 8673479169718948241}
   minimumDistFromGround: 0.8
   directionOfTravel: {x: 1, y: 0, z: 0}
-  forwardSpeed: 6000
-  gravity: -1200
+  forwardSpeed: 5500
+  gravity: 1200
   virtualCamera: {fileID: 375625991}
   stop: 0
   grounded: 0

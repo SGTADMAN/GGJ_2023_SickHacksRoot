@@ -73,7 +73,7 @@ public class DownhillHoverboardScript : MonoBehaviour
 
     private void Update()
     {
-        boardRigidbody.AddForce(input.x * (moveForce*Time.deltaTime) * transform.right);
+        boardRigidbody.AddForce(input.x * (moveForce*Time.deltaTime) * virtualCamera.transform.right);
         if (!grounded)
         {
             hoverboardModel.transform.Rotate((playerTurnTorque * Time.deltaTime) * -rotInput.z, (playerTurnTorque * Time.deltaTime) * rotInput.x, 0);
@@ -108,13 +108,10 @@ public class DownhillHoverboardScript : MonoBehaviour
             grounded = true;
         }
         playerAnim.SetBool("grounded", grounded);
-
-        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        if (grounded)
-        {
+        
             Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
-        }
+
 
         if (Vector3.Distance(transform.position, targetWaypoint.position) < Vector3.Distance(lastWaypointPos.position, targetWaypoint.position) / 2)
         {
@@ -140,9 +137,14 @@ public class DownhillHoverboardScript : MonoBehaviour
                 directionOfTravel = (targetWaypoint.position - lastWaypointPos.position).normalized;
             }            
         }
-        //Vector3 lerpPos = Vector3.Slerp(transform.position, targetWaypoint.position, 0.1f*Time.deltaTime);
-        Quaternion aimingRot = Quaternion.LookRotation(targetWaypoint.position - lastWaypointPos.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, aimingRot, turnTorque*Time.deltaTime);
+
+        Quaternion aimingRot = Quaternion.LookRotation(targetWaypoint.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, 
+            Quaternion.Euler(aimingRot.eulerAngles.x, 
+            aimingRot.eulerAngles.y, 
+            transform.rotation.eulerAngles.z), 
+            turnTorque * Time.deltaTime);
+
         //transform.LookAt(targetWaypoint, Vector3.up);
 
         if (stop)
@@ -155,6 +157,11 @@ public class DownhillHoverboardScript : MonoBehaviour
             ApplyForwardForce();
         }
 
+        if (!isUpright())
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(aimingRot.eulerAngles.x, aimingRot.eulerAngles.y, 0f), turnTorque * Time.deltaTime);
+        }
+
     }
 
     private void ApplyForwardForce()
@@ -163,7 +170,7 @@ public class DownhillHoverboardScript : MonoBehaviour
     }
     private void ApplyDownwardForce()
     {
-        boardRigidbody.AddForce(-transform.up * (-gravity * Time.deltaTime), ForceMode.Acceleration);
+        boardRigidbody.AddForce(-Vector3.up * (gravity * Time.deltaTime), ForceMode.Acceleration);
     }
 
     void ApplyForce(Transform anchor, RaycastHit hit)

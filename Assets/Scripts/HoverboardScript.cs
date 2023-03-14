@@ -9,6 +9,7 @@ public class HoverboardScript : MonoBehaviour
     Rigidbody boardRigidbody;
     public LayerMask layerMask;
     [SerializeField] float minimumDistFromGround = 0.5f;
+    [SerializeField] bool grounded;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();
@@ -33,16 +34,26 @@ public class HoverboardScript : MonoBehaviour
     {     
         if (Physics.Raycast(transform.position, -transform.up, out normalCheckHit, minimumDistFromGround, layerMask))
         {
-            boardRigidbody.AddForce(input.z * (moveForce) * transform.forward);            
+            grounded = true;         
         }
+        else
+        {
+            grounded = false;
+        }
+        boardRigidbody.AddForce(input.z * (moveForce) * transform.forward);
         boardRigidbody.AddTorque(input.x * (turnTorque) * transform.up);
     }
     private void FixedUpdate()
     {
-        for (int i = 0; i < 4; i++)
+        if (grounded)
         {
-            ApplyForce(anchors[i], hits[i]);
+            for (int i = 0; i < 4; i++)
+            {
+                ApplyForce(anchors[i], hits[i]);
+            }
         }
+        Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
     }
     void ApplyForce(Transform anchor, RaycastHit hit)
     {
@@ -52,12 +63,6 @@ public class HoverboardScript : MonoBehaviour
             force = Mathf.Abs(1 / (hit.point.y - anchor.position.y));
             boardRigidbody.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
         }
-
-        //if (!isUpright())
-        //{
-            Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
-        //}
     }
 
     bool isUpright()
