@@ -10,6 +10,15 @@ public class HoverboardScript : MonoBehaviour
     public LayerMask layerMask;
     [SerializeField] float minimumDistFromGround = 0.5f;
     [SerializeField] bool grounded;
+    public float multiplier;
+    public float moveForce, turnTorque, rotationRate, gravity = 15;
+    public Transform[] anchors = new Transform[4];
+    [SerializeField] Transform rwdPusher;
+    RaycastHit[] hits = new RaycastHit[4];
+    RaycastHit normalCheckHit;
+    [SerializeField] float uprightCheck;
+    private float rotVelocity;
+    [SerializeField] float turnRotAngle, turnRotSeekSpeed;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();
@@ -24,24 +33,22 @@ public class HoverboardScript : MonoBehaviour
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
     }
-    public float multiplier;
-    public float moveForce, turnTorque;
-    public Transform[] anchors = new Transform[4];
-    RaycastHit[] hits = new RaycastHit[4];
-    RaycastHit normalCheckHit;
 
     private void Update()
     {     
         if (Physics.Raycast(transform.position, -transform.up, out normalCheckHit, minimumDistFromGround, layerMask))
         {
-            grounded = true;         
+            grounded = true;
+            boardRigidbody.AddForce(input.z * (moveForce * Time.deltaTime * boardRigidbody.mass) * transform.forward);
         }
         else
         {
             grounded = false;
         }
-        boardRigidbody.AddForce(input.z * (moveForce) * transform.forward);
-        boardRigidbody.AddTorque(input.x * (turnTorque) * transform.up);
+        Vector3 turnAmount = transform.up * rotationRate * input.x;
+        turnAmount *= Time.deltaTime * boardRigidbody.mass;
+        boardRigidbody.AddTorque(turnAmount);
+        
     }
     private void FixedUpdate()
     {
@@ -51,9 +58,25 @@ public class HoverboardScript : MonoBehaviour
             {
                 ApplyForce(anchors[i], hits[i]);
             }
+            boardRigidbody.drag = 1.8f;
         }
+        else
+        {
+            ApplyDownwardForce();
+            boardRigidbody.drag = 0;
+        }
+
         Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
+
+        if (!isUpright())
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0f), 10 * Time.deltaTime);
+        }
+
+        Vector3 newRot = transform.eulerAngles;
+        newRot.z = Mathf.SmoothDampAngle(newRot.z, input.x * -turnRotAngle, ref rotVelocity, turnRotSeekSpeed);
+        transform.eulerAngles = newRot;
     }
     void ApplyForce(Transform anchor, RaycastHit hit)
     {
@@ -64,10 +87,14 @@ public class HoverboardScript : MonoBehaviour
             boardRigidbody.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
         }
     }
-
+    private void ApplyDownwardForce()
+    {
+        boardRigidbody.AddForce(-Vector3.up * (gravity * Time.deltaTime * boardRigidbody.mass), ForceMode.Acceleration);
+    }
     bool isUpright()
     {
-        if (Vector3.Dot(transform.up, Vector3.down) < -0.5f)
+        uprightCheck = Vector3.Dot(transform.up, Vector3.down);
+        if (uprightCheck < -0.1f)
         {
             return true;
         }
