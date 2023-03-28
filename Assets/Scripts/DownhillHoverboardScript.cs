@@ -14,7 +14,7 @@ public class DownhillHoverboardScript : MonoBehaviour
     [Header("Variables")]
     public LayerMask layerMask;
     public float multiplier;
-    public float moveForce, turnTorque, leanAmount;
+    public float moveForce, turnTorque;
     public float playerTurnTorque;
     Rigidbody boardRigidbody;
 
@@ -23,7 +23,6 @@ public class DownhillHoverboardScript : MonoBehaviour
     RaycastHit[] hits = new RaycastHit[4];
     RaycastHit normalCheckHit;
     [SerializeField] float minimumDistFromGround = 0.5f;
-    [SerializeField] Vector3 directionOfTravel;
     [SerializeField] float forwardSpeed = 10;
     [SerializeField] float gravity = 9.81f;
 
@@ -40,6 +39,11 @@ public class DownhillHoverboardScript : MonoBehaviour
     public Transform targetWaypoint;
     public Transform lastWaypointPos;
     public Transform startingPoint;
+
+    [Header("Other Stuff")]
+    [SerializeField] float uprightCheck;
+    private float rotVelocity;
+    [SerializeField] float turnRotAngle, turnRotSeekSpeed;
     private void Start()
     {
         boardRigidbody = GetComponent<Rigidbody>();        
@@ -47,7 +51,6 @@ public class DownhillHoverboardScript : MonoBehaviour
         waypointNo = 0;
         targetWaypoint = wayPointList[waypointNo];
         playerAnim = GetComponentInChildren<Animator>();
-        directionOfTravel = (targetWaypoint.position - lastWaypointPos.position).normalized;
     }
     public void Reset()
     {
@@ -58,7 +61,6 @@ public class DownhillHoverboardScript : MonoBehaviour
         boardRigidbody.velocity = Vector3.zero;
         boardRigidbody.angularVelocity = Vector3.zero;
         virtualCamera.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
-        directionOfTravel = (targetWaypoint.position - lastWaypointPos.position).normalized;
     }
     public void HandleMovement(InputAction.CallbackContext context)
     {
@@ -73,7 +75,15 @@ public class DownhillHoverboardScript : MonoBehaviour
 
     private void Update()
     {
-        boardRigidbody.AddForce(input.x * (moveForce*Time.deltaTime) * virtualCamera.transform.right);
+        if (Physics.Raycast(transform.position, -transform.up, out normalCheckHit, 1f, layerMask))
+        {
+            grounded = true;
+        }
+        else
+        {           
+            grounded = false;
+        }
+        boardRigidbody.AddForce(input.x * (moveForce * Time.deltaTime * boardRigidbody.mass) * virtualCamera.transform.right);
         if (!grounded)
         {
             hoverboardModel.transform.Rotate((playerTurnTorque * Time.deltaTime) * -rotInput.z, (playerTurnTorque * Time.deltaTime) * rotInput.x, 0);
@@ -83,35 +93,26 @@ public class DownhillHoverboardScript : MonoBehaviour
         }
         else
         {
-            hoverboardModel.transform.localRotation = new Quaternion(0, 180, 0, 0);
-            
+            hoverboardModel.transform.localRotation = new Quaternion(0, 180, 0, 0);            
         }
     }
     private void FixedUpdate()
     {
-        for (int i = 0; i < 4; i++)
+        if (grounded)
         {
-            ApplyForce(anchors[i], hits[i]);
+            for (int i = 0; i < 4; i++)
+            {
+                ApplyForce(anchors[i], hits[i]);
+            }
         }
-
-
-        if (!Physics.Raycast(transform.position, -transform.up, out normalCheckHit, 1f, layerMask))
+        else
         {
             if (!stop)
             {
                 ApplyDownwardForce();
             }
-            grounded = false;
         }
-        else
-        {
-            grounded = true;
-        }
-        playerAnim.SetBool("grounded", grounded);
-        
-            Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
-
+        playerAnim.SetBool("grounded", grounded); 
 
         if (Vector3.Distance(transform.position, targetWaypoint.position) < Vector3.Distance(lastWaypointPos.position, targetWaypoint.position) / 2)
         {
@@ -120,7 +121,6 @@ public class DownhillHoverboardScript : MonoBehaviour
                 waypointNo++;
                 lastWaypointPos = targetWaypoint;
                 targetWaypoint = wayPointList[waypointNo];
-                directionOfTravel = (targetWaypoint.position - lastWaypointPos.position).normalized;
             }
             catch
             {
@@ -134,7 +134,6 @@ public class DownhillHoverboardScript : MonoBehaviour
                     lastWaypointPos = wayPointList[wayPointList.Length - 2];
                     targetWaypoint = wayPointList[wayPointList.Length - 1];                    
                 }
-                directionOfTravel = (targetWaypoint.position - lastWaypointPos.position).normalized;
             }            
         }
 
@@ -144,9 +143,7 @@ public class DownhillHoverboardScript : MonoBehaviour
             aimingRot.eulerAngles.y, 
             transform.rotation.eulerAngles.z), 
             turnTorque * Time.deltaTime);
-
-        //transform.LookAt(targetWaypoint, Vector3.up);
-
+        
         if (stop)
         {
             boardRigidbody.velocity = Vector3.zero;
@@ -162,11 +159,18 @@ public class DownhillHoverboardScript : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(aimingRot.eulerAngles.x, aimingRot.eulerAngles.y, 0f), turnTorque * Time.deltaTime);
         }
 
+        Quaternion q = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * 0.5f);
+
+        Vector3 newRot = transform.eulerAngles;
+        newRot.z = Mathf.SmoothDampAngle(newRot.z, input.x * -turnRotAngle, ref rotVelocity, turnRotSeekSpeed);
+        transform.eulerAngles = newRot;
+
     }
 
     private void ApplyForwardForce()
     {
-        boardRigidbody.AddForce(transform.forward * (forwardSpeed*Time.deltaTime), ForceMode.Acceleration);
+        boardRigidbody.AddForce(transform.forward * (forwardSpeed*Time.deltaTime*boardRigidbody.mass));
     }
     private void ApplyDownwardForce()
     {
@@ -185,7 +189,8 @@ public class DownhillHoverboardScript : MonoBehaviour
 
     bool isUpright()
     {
-        if (Vector3.Dot(transform.up, Vector3.down) < -0.5f)
+        uprightCheck = Vector3.Dot(transform.up, Vector3.down);
+        if (uprightCheck < -0.1f)
         {
             return true;
         }
